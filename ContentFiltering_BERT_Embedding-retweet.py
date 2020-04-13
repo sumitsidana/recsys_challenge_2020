@@ -30,7 +30,7 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased', do_low
 # In[ ]:
 
 
-user_tokens = pd.read_csv('s3://recsys-challenge-2020/user_tokens_reply.csv')
+user_tokens = pd.read_csv('s3://recsys-challenge-2020/user_tokens_retweet.csv')
 column_of_interest = ["text_ tokens", "engaging_user_id"]
 val_set = pd.read_csv('s3://recsys-challenge-2020/val.tsv', encoding="utf-8",
                      usecols= [0, 14], names=column_of_interest, sep="\x01")
@@ -50,11 +50,12 @@ print('number of rows for which score needs to be computed: ' + str(len(user_tok
 
 
 def calculate_average(row1, row2, index, time1):
+    prior = 0.113
     if index % 1000 == 0:
         print(index)
         print(time.time() - time1)
     if pd.isna(row1):
-        return 0.028
+        return prior
     sum_tensors = torch.zeros([768], dtype=torch.float32)
     tweet_token_list = ast.literal_eval(row1)
     for token_list in tweet_token_list:
@@ -84,11 +85,11 @@ def calculate_average(row1, row2, index, time1):
 
 #     P(B) = P(B/A)*P(A) + P(B/~A)* P(~A)
 
-    num = P_B_given_A * 0.028
+    num = P_B_given_A * prior
     
     
     unlikelihood = 1.0 - P_B_given_A # P(B/~A)
-    anti_score = unlikelihood * 0.972
+    anti_score = unlikelihood * 0.887
     normalizing_factor = num + anti_score # P(B)
 
     
@@ -100,14 +101,14 @@ def calculate_average(row1, row2, index, time1):
 # In[ ]:
 
 
-user_val_set_reply_score = pd.DataFrame()
+user_val_set_retweet_score = pd.DataFrame()
 
 
 # In[ ]:
 
 
 time1 = time.time()
-user_val_set_reply_score['reply_score'] = user_tokens_val_set.apply (lambda z: calculate_average(z.text__tokens_y, z.text__tokens_x, z.name, time1), axis = 1)
+user_val_set_retweet_score['retweet_score'] = user_tokens_val_set.apply (lambda z: calculate_average(z.text__tokens_y, z.text__tokens_x, z.name, time1), axis = 1)
 time2 = time.time()
 print(time2 - time1)
 
@@ -115,5 +116,5 @@ print(time2 - time1)
 # In[ ]:
 
 
-user_val_set_reply_score.to_csv('s3://recsys-challenge-2020/user_reply_score.csv', index = False)
+user_val_set_retweet_score.to_csv('s3://recsys-challenge-2020/user_retweet_score.csv', index = False)
 
