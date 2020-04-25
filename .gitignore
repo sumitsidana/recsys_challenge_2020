@@ -1,1 +1,7 @@
 data/
+classification_type_models/libfm/
+.ipynb_checkpoints/
+__pycache__/
+text_representation/*.bin
+text_representation/*.bin.gz
+text_representation/*.bin.gz.part
