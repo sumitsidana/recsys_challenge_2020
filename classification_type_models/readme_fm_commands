@@ -5,3 +5,7 @@
 ./triple_format_to_libfm.pl -in /home/ubuntu/recsys_challenge_2020/classification_type_models/data/like/train_set.csv,/home/ubuntu/recsys_challenge_2020/classification_type_models/data/like/val_set.csv -target 4 -separator "\t
 
 ./libFM -task c -train /home/ubuntu/recsys_challenge_2020/classification_type_models/data/train_set.csv.libfm -test /home/ubuntu/recsys_challenge_2020/classification_type_models/data/val_set.csv.libfm -method sgd -iter 8 -learn_rate 0.01 -init_stdev 0.1 -regular '0.028,0.01,0.01' -out /home/ubuntu/recsys_challenge_2020/classification_type_models/data/val_set_result.csv
+
+
+
+./libFM -task c -train /home/ubuntu/recsys_challenge_2020/classification_type_models/data/like/train.csv.libfm -test /home/ubuntu/recsys_challenge_2020/classification_type_models/data/like/test.csv.libfm -method sgd -iter 8 -learn_rate 0.01 -init_stdev 0.1 -regular '0.028,0.01,0.01' -out /home/ubuntu/recsys_challenge_2020/classification_type_models/data/like/test_set_result.csv
