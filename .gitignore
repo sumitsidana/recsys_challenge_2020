@@ -5,3 +5,4 @@ __pycache__/
 text_representation/*.bin
 text_representation/*.bin.gz
 text_representation/*.bin.gz.part
+text_representation/all_lang_output.csv
