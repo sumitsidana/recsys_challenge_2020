@@ -6,7 +6,6 @@ This repository contains the code for 4th place solution for  approach to RecSys
 [Sumit Sidana](https://github.com/sumitsidana)
 # Paper
 ![GitHub Logo](/paper/recsys_challenge_2020.png)
-Format: ![/paper/recsys_challenge_2020.png](url)
 # Models
 
 This repository uses:
